@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Task = require("../models/task.model");
 
-router.get("/tasks", async (req, res) => {
+router.get("/api/tasks", async (req, res) => {
   const taskList = await Task.find();
   return res.send({ success: true, taskList: taskList });
 });
 
-router.post("/save", async (req, res) => {
+router.post("/api/tasks/add", async (req, res) => {
   const data = await Task({
     title: req.body.title,
     description: req.body.description,
@@ -20,7 +20,7 @@ router.post("/save", async (req, res) => {
     .send({ success: true, message: "Task created successfully !!" });
 });
 
-router.put("/update/:id", async (req, res) => {
+router.put("/api/tasks/update/:id", async (req, res) => {
   const taskList = await Task.findByIdAndUpdate(
     req.params.id,
     {
@@ -35,7 +35,7 @@ router.put("/update/:id", async (req, res) => {
     return res.send({ success: true, message: "Task updated successfully !!" });
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/api/tasks/delete/:id", async (req, res) => {
   const id = await Task.findByIdAndDelete(req.params.id);
   if (!id)
     return res

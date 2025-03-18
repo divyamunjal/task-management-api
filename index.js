@@ -1,6 +1,7 @@
 const express = require('express');
 const taskRoute = require('./Routes/tasks');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 mongoose
   .connect("mongodb://localhost:27017/task-management")
@@ -8,6 +9,7 @@ mongoose
   .catch((error) => console.log('Error in connected DB' + error));
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(taskRoute)
 
